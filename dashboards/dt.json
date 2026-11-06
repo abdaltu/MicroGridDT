@@ -1,0 +1,254 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "${DS_ZABBIX}"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "additionalSourceColor": "rgb(81, 187, 67)",
+        "additionalSourceIcon": "battery",
+        "additionalSourceLabel": "Battery",
+        "additionalSourceLoadQuery": "ProxBox: Battery Voltage",
+        "gridColor": "rgb(232, 41, 26)",
+        "gridQuery": "ProxBox: UPS Output Power Watt",
+        "linesColor": "rgb(104, 193, 255)",
+        "loadColor": "rgb(0, 141, 209)",
+        "measurementUnit": "kW",
+        "showLegend": false,
+        "solarColor": "rgb(244, 174, 1)",
+        "solarQuery": "ProxBox: UPS PV Power Watt",
+        "xOffset": 0,
+        "yOffset": 98,
+        "zoom": 1.1
+      },
+      "pluginVersion": "1.1.0",
+      "targets": [
+        {
+          "application": {
+            "filter": "UPS Status"
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "${DS_ZABBIX}"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Hypervisors"
+          },
+          "host": {
+            "filter": "ProxBox"
+          },
+          "item": {
+            "filter": "UPS PV Power Watt"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": "UPS Status"
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "${DS_ZABBIX}"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Hypervisors"
+          },
+          "hide": false,
+          "host": {
+            "filter": "ProxBox"
+          },
+          "item": {
+            "filter": "UPS Output Power Watt"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": "UPS Status"
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "${DS_ZABBIX}"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Hypervisors"
+          },
+          "hide": false,
+          "host": {
+            "filter": "ProxBox"
+          },
+          "item": {
+            "filter": "Battery Voltage"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "DT",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "Time",
+            "mode": "inner"
+          }
+        }
+      ],
+      "type": "lehmannch-flow-panel"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "DT",
+  "uid": "cb6d6cd3-f16c-4ffe-87c2-a745cd75a0c5",
+  "version": 11,
+  "__inputs": [
+    {
+      "name": "DS_ZABBIX",
+      "label": "Zabbix",
+      "type": "datasource",
+      "pluginId": "alexanderzobnin-zabbix-datasource",
+      "pluginName": "alexanderzobnin-zabbix-datasource"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+itemid,value_type,key_,name,use
+36930,3,sr.SolRad,SolarRadiation,True
+35911,3,ups.ACrelay,UPS AC Contactor status,True
+31315,0,ups.BatteryCharge,UPS Battery Charge,True
+33912,0,ups.BatteryChargeCurrent,UPS Battery Charging Current,True
+33914,0,ups.BatteryDischargeCurrent,UPS Battery Discharge Current,True
+31316,0,ups.BatteryVoltage,UPS Battery Voltage,True
+31332,0,ups.InputFrequency,UPS AC input frequency,True
+31317,0,ups.InputVoltage,UPS AC input voltage,True
+33916,0,ups.OutputPowerVa,UPS Output Power VA,True
+33918,0,ups.OutputPowerW,UPS Output Power Watt,True
+31318,0,ups.OutputVoltage,UPS AC outut voltage,True
+33924,0,ups.PvChargerPower,UPS PV Power Watt,True
+33910,0,ups.PvInputCurrent,UPS PV Current,True
+33908,0,ups.PvInputVoltage,UPS PV Voltage,True
+31322,3,ups.Temperature,UPS Temperature,True
+31319,3,ups.UpsLoad,UPS Load,True
+31320,1,ups.UpsStatus,UPS Status,True
+36550,0,ws.rtBaroCurrmB,Atmospheric pressure,True
+36553,3,ws.rtInsideHum,Inside Humidity,True
+36554,0,ws.rtInsideTempC,Inside Temperature,True
+36556,3,ws.rtOutsideHum,Outside Humidity,True
+36557,0,ws.rtOutsideTempC,Outside Temperature,True
+36560,3,ws.rtWindAvgSpeedKMH,Wind Speed Average,True
+36561,3,ws.rtWindDirN,Wind Direction,True
+36562,3,ws.rtWindSpeedKMH,Wind Speed,True

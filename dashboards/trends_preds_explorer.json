@@ -1,0 +1,1401 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "pointSize": 4,
+            "showPoints": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hard"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Soft"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '${itemid}' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '${itemid}') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${selector_mode} WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": true,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", HARD_VALUE AS \"Hard\" FROM DT.TRENDS_PRED_SELECTED_${selector_mode} WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": true,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", SOFT_VALUE AS \"Soft\" FROM DT.TRENDS_PRED_SELECTED_${selector_mode} WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "D",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Adaptive trend forecast vs Live  ·  ${itemid:text}",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "showPoints": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SARIMAX"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LightGBM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LSTM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GRU"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PatchTST"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '${itemid}' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '${itemid}') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", AVG(VALUE_AVG) AS \"SARIMAX\" FROM DT.${pred_table} WHERE MODEL = 'SARIMAX' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' GROUP BY CLOCK ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", AVG(VALUE_AVG) AS \"LightGBM\" FROM DT.${pred_table} WHERE MODEL = 'LightGBM' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' GROUP BY CLOCK ORDER BY CLOCK",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", AVG(VALUE_AVG) AS \"LSTM\" FROM DT.${pred_table} WHERE MODEL = 'LSTM' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' GROUP BY CLOCK ORDER BY CLOCK",
+          "refId": "D",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", AVG(VALUE_AVG) AS \"GRU\" FROM DT.${pred_table} WHERE MODEL = 'GRU' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' GROUP BY CLOCK ORDER BY CLOCK",
+          "refId": "E",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", AVG(VALUE_AVG) AS \"PatchTST\" FROM DT.${pred_table} WHERE MODEL = 'PatchTST' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' GROUP BY CLOCK ORDER BY CLOCK",
+          "refId": "F",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Per-model trend forecasts vs Live  ·  ${pred_table}",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SARIMAX"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LightGBM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LSTM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GRU"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PatchTST"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", FINAL_EWMA AS \"SARIMAX\" FROM DT.TRENDS_ERROR_EWMA_${selector_mode} WHERE MODEL = 'SARIMAX' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", FINAL_EWMA AS \"LightGBM\" FROM DT.TRENDS_ERROR_EWMA_${selector_mode} WHERE MODEL = 'LightGBM' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", FINAL_EWMA AS \"LSTM\" FROM DT.TRENDS_ERROR_EWMA_${selector_mode} WHERE MODEL = 'LSTM' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", FINAL_EWMA AS \"GRU\" FROM DT.TRENDS_ERROR_EWMA_${selector_mode} WHERE MODEL = 'GRU' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "D",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", FINAL_EWMA AS \"PatchTST\" FROM DT.TRENDS_ERROR_EWMA_${selector_mode} WHERE MODEL = 'PatchTST' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "E",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Per-model error-EWMA (TRENDS_ERROR_EWMA.FINAL_EWMA)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 3,
+          "max": 1,
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SARIMAX"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LightGBM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LSTM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GRU"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PatchTST"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "basic",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CAST(SOFT_WEIGHTS->>'$.SARIMAX' AS DOUBLE) AS \"SARIMAX\", CAST(SOFT_WEIGHTS->>'$.LightGBM' AS DOUBLE) AS \"LightGBM\", CAST(SOFT_WEIGHTS->>'$.LSTM' AS DOUBLE) AS \"LSTM\", CAST(SOFT_WEIGHTS->>'$.GRU' AS DOUBLE) AS \"GRU\", CAST(SOFT_WEIGHTS->>'$.PatchTST' AS DOUBLE) AS \"PatchTST\" FROM DT.TRENDS_SELECTION_LOG_${selector_mode} WHERE ITEMID = '${itemid}' AND SOFT_WEIGHTS IS NOT NULL ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Latest soft weights  ·  ${itemid:text}",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "GRU": {
+                  "color": "orange",
+                  "index": 3
+                },
+                "LSTM": {
+                  "color": "blue",
+                  "index": 2
+                },
+                "LightGBM": {
+                  "color": "green",
+                  "index": 1
+                },
+                "PatchTST": {
+                  "color": "purple",
+                  "index": 4
+                },
+                "SARIMAX": {
+                  "color": "yellow",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "id": 5,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", HARD_MODEL AS \"Hard model\" FROM DT.TRENDS_SELECTION_LOG_${selector_mode} WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Active Hard model over time",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "Hard": {
+                  "color": "dark-orange",
+                  "index": 0
+                },
+                "Soft": {
+                  "color": "dark-red",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "id": 6,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", METHOD AS \"Method\" FROM DT.TRENDS_SELECTION_LOG_${selector_mode} WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 AND ITEMID = '${itemid}' ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Adaptive method (Hard vs Soft) over time",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 3,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT FINAL_EWMA AS \"FINAL\", FAST_EWMA AS \"FAST\", SLOW_EWMA AS \"SLOW\", ACTUAL AS \"ACTUAL\" FROM DT.TRENDS_VALUE_EWMA WHERE ITEMID = '${itemid}' ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Latest TRENDS_VALUE_EWMA  ·  ${itemid:text}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT FROM_UNIXTIME(CLOCK) AS \"clock\", ACTUAL, HARD_MODEL, HARD_VALUE, SOFT_VALUE, METHOD, ADAPTIVE_VALUE FROM DT.TRENDS_SELECTION_LOG_${selector_mode} WHERE ITEMID = '${itemid}' ORDER BY CLOCK DESC LIMIT 100",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "TRENDS_SELECTION_LOG_${selector_mode}  ·  last 100 rows for ${itemid:text}",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "trends",
+    "predictions",
+    "DT"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "datasource": {
+          "type": "mysql",
+          "uid": "${DS_MYSQL}"
+        },
+        "definition": "SELECT   CONCAT(IFNULL(label_map.label, CAST(p.ITEMID AS CHAR)), ' [',          CAST(p.ITEMID AS CHAR), ']') AS __text,   CAST(p.ITEMID AS CHAR) AS __value FROM DT.TRENDS_PRED_DIRECT24 p LEFT JOIN (SELECT 36930 AS itemid, 'sr.SolRad' AS label UNION ALL SELECT 35911 AS itemid, 'ups.ACrelay' AS label UNION ALL SELECT 31315 AS itemid, 'ups.BatteryCharge' AS label UNION ALL SELECT 33912 AS itemid, 'ups.BatteryChargeCurrent' AS label UNION ALL SELECT 33914 AS itemid, 'ups.BatteryDischargeCurrent' AS label UNION ALL SELECT 31316 AS itemid, 'ups.BatteryVoltage' AS label UNION ALL SELECT 31332 AS itemid, 'ups.InputFrequency' AS label UNION ALL SELECT 31317 AS itemid, 'ups.InputVoltage' AS label UNION ALL SELECT 33916 AS itemid, 'ups.OutputPowerVa' AS label UNION ALL SELECT 33918 AS itemid, 'ups.OutputPowerW' AS label UNION ALL SELECT 31318 AS itemid, 'ups.OutputVoltage' AS label UNION ALL SELECT 33924 AS itemid, 'ups.PvChargerPower' AS label UNION ALL SELECT 33910 AS itemid, 'ups.PvInputCurrent' AS label UNION ALL SELECT 33908 AS itemid, 'ups.PvInputVoltage' AS label UNION ALL SELECT 31322 AS itemid, 'ups.Temperature' AS label UNION ALL SELECT 31319 AS itemid, 'ups.UpsLoad' AS label UNION ALL SELECT 31320 AS itemid, 'ups.UpsStatus' AS label UNION ALL SELECT 36550 AS itemid, 'ws.rtBaroCurrmB' AS label UNION ALL SELECT 36553 AS itemid, 'ws.rtInsideHum' AS label UNION ALL SELECT 36554 AS itemid, 'ws.rtInsideTempC' AS label UNION ALL SELECT 36556 AS itemid, 'ws.rtOutsideHum' AS label UNION ALL SELECT 36557 AS itemid, 'ws.rtOutsideTempC' AS label UNION ALL SELECT 36560 AS itemid, 'ws.rtWindAvgSpeedKMH' AS label UNION ALL SELECT 36561 AS itemid, 'ws.rtWindDirN' AS label UNION ALL SELECT 36562 AS itemid, 'ws.rtWindSpeedKMH' AS label) label_map ON label_map.itemid = p.ITEMID GROUP BY p.ITEMID, label_map.label ORDER BY p.ITEMID",
+        "includeAll": false,
+        "label": "ITEMID",
+        "multi": false,
+        "name": "itemid",
+        "options": [],
+        "query": "SELECT   CONCAT(IFNULL(label_map.label, CAST(p.ITEMID AS CHAR)), ' [',          CAST(p.ITEMID AS CHAR), ']') AS __text,   CAST(p.ITEMID AS CHAR) AS __value FROM DT.TRENDS_PRED_DIRECT24 p LEFT JOIN (SELECT 36930 AS itemid, 'sr.SolRad' AS label UNION ALL SELECT 35911 AS itemid, 'ups.ACrelay' AS label UNION ALL SELECT 31315 AS itemid, 'ups.BatteryCharge' AS label UNION ALL SELECT 33912 AS itemid, 'ups.BatteryChargeCurrent' AS label UNION ALL SELECT 33914 AS itemid, 'ups.BatteryDischargeCurrent' AS label UNION ALL SELECT 31316 AS itemid, 'ups.BatteryVoltage' AS label UNION ALL SELECT 31332 AS itemid, 'ups.InputFrequency' AS label UNION ALL SELECT 31317 AS itemid, 'ups.InputVoltage' AS label UNION ALL SELECT 33916 AS itemid, 'ups.OutputPowerVa' AS label UNION ALL SELECT 33918 AS itemid, 'ups.OutputPowerW' AS label UNION ALL SELECT 31318 AS itemid, 'ups.OutputVoltage' AS label UNION ALL SELECT 33924 AS itemid, 'ups.PvChargerPower' AS label UNION ALL SELECT 33910 AS itemid, 'ups.PvInputCurrent' AS label UNION ALL SELECT 33908 AS itemid, 'ups.PvInputVoltage' AS label UNION ALL SELECT 31322 AS itemid, 'ups.Temperature' AS label UNION ALL SELECT 31319 AS itemid, 'ups.UpsLoad' AS label UNION ALL SELECT 31320 AS itemid, 'ups.UpsStatus' AS label UNION ALL SELECT 36550 AS itemid, 'ws.rtBaroCurrmB' AS label UNION ALL SELECT 36553 AS itemid, 'ws.rtInsideHum' AS label UNION ALL SELECT 36554 AS itemid, 'ws.rtInsideTempC' AS label UNION ALL SELECT 36556 AS itemid, 'ws.rtOutsideHum' AS label UNION ALL SELECT 36557 AS itemid, 'ws.rtOutsideTempC' AS label UNION ALL SELECT 36560 AS itemid, 'ws.rtWindAvgSpeedKMH' AS label UNION ALL SELECT 36561 AS itemid, 'ws.rtWindDirN' AS label UNION ALL SELECT 36562 AS itemid, 'ws.rtWindSpeedKMH' AS label) label_map ON label_map.itemid = p.ITEMID GROUP BY p.ITEMID, label_map.label ORDER BY p.ITEMID",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "recursive (TRENDS_PRED_RECURSIVE)",
+          "value": "TRENDS_PRED_RECURSIVE"
+        },
+        "includeAll": false,
+        "label": "Per-model table",
+        "multi": false,
+        "name": "pred_table",
+        "options": [
+          {
+            "selected": true,
+            "text": "recursive (TRENDS_PRED_RECURSIVE)",
+            "value": "TRENDS_PRED_RECURSIVE"
+          },
+          {
+            "selected": false,
+            "text": "direct24 (TRENDS_PRED_DIRECT24)",
+            "value": "TRENDS_PRED_DIRECT24"
+          }
+        ],
+        "query": "TRENDS_PRED_RECURSIVE,TRENDS_PRED_DIRECT24",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "recursive",
+          "value": "RECURSIVE"
+        },
+        "includeAll": false,
+        "label": "Selector mode",
+        "multi": false,
+        "name": "selector_mode",
+        "options": [
+          {
+            "selected": true,
+            "text": "recursive",
+            "value": "RECURSIVE"
+          },
+          {
+            "selected": false,
+            "text": "direct24",
+            "value": "DIRECT24"
+          }
+        ],
+        "query": "RECURSIVE,DIRECT24",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6d",
+    "to": "now+1d"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Trends Predictions — Explorer",
+  "uid": "trends-preds-explorer",
+  "version": 1,
+  "__inputs": [
+    {
+      "name": "DS_MYSQL",
+      "label": "Mysql",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "mysql"
+    }
+  ]
+}

@@ -1,0 +1,6181 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "yellow",
+                "value": 600
+              },
+              {
+                "color": "red",
+                "value": 1800
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT (UNIX_TIMESTAMP() - MAX(CLOCK)) AS `Lag` FROM DT.HISTORY_PRED_RECURSIVE",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Prediction lag (s) — last MAX(CLOCK) in HISTORY_PRED_RECURSIVE",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": ""
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(DISTINCT ITEMID) AS Itemids FROM DT.HISTORY_PRED_RECURSIVE WHERE CLOCK > UNIX_TIMESTAMP() - 3600",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Active itemids (last 1h)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT 100.0 * SUM(METHOD='Hard') / COUNT(*) AS HardPct FROM DT.HISTORY_SELECTION_LOG_${selector_mode} WHERE CLOCK > UNIX_TIMESTAMP() - 3600",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Hard method % (last 1h)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT AVG(ABS(ACTUAL - ADAPTIVE_VALUE)) AS MAE FROM DT.HISTORY_SELECTION_LOG_${selector_mode} WHERE CLOCK > UNIX_TIMESTAMP() - 3600 AND ACTUAL IS NOT NULL AND ADAPTIVE_VALUE IS NOT NULL",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Avg adaptive MAE (last 1h)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "options": {
+        "infinitePan": false,
+        "inlineEditing": false,
+        "panZoom": false,
+        "root": {
+          "background": {
+            "color": {
+              "fixed": "transparent"
+            }
+          },
+          "border": {
+            "color": {
+              "fixed": "dark-gray"
+            },
+            "radius": 0,
+            "width": 0
+          },
+          "constraint": {
+            "horizontal": "left",
+            "vertical": "top"
+          },
+          "elements": [
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-orange"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "orange"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Solar box",
+              "placement": {
+                "height": 78,
+                "left": 20,
+                "rotation": 0,
+                "top": 10,
+                "width": 340
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "☀",
+                  "fontSize": 32,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Solar icon",
+              "placement": {
+                "height": 60,
+                "left": 30,
+                "rotation": 0,
+                "top": 18,
+                "width": 60
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Solar Radiation",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Solar label",
+              "placement": {
+                "height": 22,
+                "left": 96,
+                "rotation": 0,
+                "top": 18,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "SolarRad",
+                  "fontSize": 24,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Solar value",
+              "placement": {
+                "height": 36,
+                "left": 96,
+                "rotation": 0,
+                "top": 40,
+                "width": 170
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-orange"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-orange"
+                  },
+                  "fixed": "W/m²",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Solar unit",
+              "placement": {
+                "height": 24,
+                "left": 270,
+                "rotation": 0,
+                "top": 50,
+                "width": 80
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-red"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "red"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Temp box",
+              "placement": {
+                "height": 78,
+                "left": 380,
+                "rotation": 0,
+                "top": 10,
+                "width": 340
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "🌡",
+                  "fontSize": 32,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Temp icon",
+              "placement": {
+                "height": 60,
+                "left": 390,
+                "rotation": 0,
+                "top": 18,
+                "width": 60
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Outside Temp",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Temp label",
+              "placement": {
+                "height": 22,
+                "left": 456,
+                "rotation": 0,
+                "top": 18,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "OutTemp",
+                  "fontSize": 24,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Temp value",
+              "placement": {
+                "height": 36,
+                "left": 456,
+                "rotation": 0,
+                "top": 40,
+                "width": 170
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-red"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-red"
+                  },
+                  "fixed": "°C",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Temp unit",
+              "placement": {
+                "height": 24,
+                "left": 630,
+                "rotation": 0,
+                "top": 50,
+                "width": 80
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Hum box",
+              "placement": {
+                "height": 78,
+                "left": 740,
+                "rotation": 0,
+                "top": 10,
+                "width": 340
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "💧",
+                  "fontSize": 32,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Hum icon",
+              "placement": {
+                "height": 60,
+                "left": 750,
+                "rotation": 0,
+                "top": 18,
+                "width": 60
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Humidity",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Hum label",
+              "placement": {
+                "height": 22,
+                "left": 816,
+                "rotation": 0,
+                "top": 18,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "OutHum",
+                  "fontSize": 24,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Hum value",
+              "placement": {
+                "height": 36,
+                "left": 816,
+                "rotation": 0,
+                "top": 40,
+                "width": 170
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-blue"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-blue"
+                  },
+                  "fixed": "%",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Hum unit",
+              "placement": {
+                "height": 24,
+                "left": 990,
+                "rotation": 0,
+                "top": 50,
+                "width": 80
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-purple"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "purple"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Wind box",
+              "placement": {
+                "height": 78,
+                "left": 1100,
+                "rotation": 0,
+                "top": 10,
+                "width": 340
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "💨",
+                  "fontSize": 32,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Wind icon",
+              "placement": {
+                "height": 60,
+                "left": 1110,
+                "rotation": 0,
+                "top": 18,
+                "width": 60
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Wind Speed",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Wind label",
+              "placement": {
+                "height": 22,
+                "left": 1176,
+                "rotation": 0,
+                "top": 18,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "WindSpd",
+                  "fontSize": 24,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Wind value",
+              "placement": {
+                "height": 36,
+                "left": 1176,
+                "rotation": 0,
+                "top": 40,
+                "width": 170
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-purple"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-purple"
+                  },
+                  "fixed": "m/s",
+                  "fontSize": 13,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "env Wind unit",
+              "placement": {
+                "height": 24,
+                "left": 1350,
+                "rotation": 0,
+                "top": 50,
+                "width": 80
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "yellow"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "yellow"
+                  },
+                  "fixed": "☀",
+                  "fontSize": 60,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Sun",
+              "placement": {
+                "height": 80,
+                "left": 10,
+                "rotation": 0,
+                "top": 130,
+                "width": 120
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-yellow"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-yellow"
+                  },
+                  "fixed": "↓ ↓ ↓",
+                  "fontSize": 18,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Sun rays",
+              "placement": {
+                "height": 22,
+                "left": 10,
+                "rotation": 0,
+                "top": 208,
+                "width": 120
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "yellow"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV container",
+              "placement": {
+                "height": 200,
+                "left": 140,
+                "rotation": 0,
+                "top": 140,
+                "width": 240
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "yellow"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "yellow"
+                  },
+                  "fixed": "Solar PV Array",
+                  "fontSize": 14,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV title",
+              "placement": {
+                "height": 22,
+                "left": 140,
+                "rotation": 0,
+                "top": 146,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 00",
+              "placement": {
+                "height": 50,
+                "left": 154,
+                "rotation": 0,
+                "top": 174,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 01",
+              "placement": {
+                "height": 50,
+                "left": 210,
+                "rotation": 0,
+                "top": 174,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 02",
+              "placement": {
+                "height": 50,
+                "left": 266,
+                "rotation": 0,
+                "top": 174,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 03",
+              "placement": {
+                "height": 50,
+                "left": 322,
+                "rotation": 0,
+                "top": 174,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 10",
+              "placement": {
+                "height": 50,
+                "left": 154,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 11",
+              "placement": {
+                "height": 50,
+                "left": 210,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 12",
+              "placement": {
+                "height": 50,
+                "left": 266,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV cell 13",
+              "placement": {
+                "height": 50,
+                "left": 322,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "PVVolt",
+                  "fontSize": 22,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV V value",
+              "placement": {
+                "height": 36,
+                "left": 140,
+                "rotation": 0,
+                "top": 284,
+                "width": 240
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-yellow"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-yellow"
+                  },
+                  "fixed": "Volts (DC)",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "PV V unit",
+              "placement": {
+                "height": 20,
+                "left": 140,
+                "rotation": 0,
+                "top": 318,
+                "width": 240
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-blue"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "blue"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hybrid box",
+              "placement": {
+                "height": 200,
+                "left": 440,
+                "rotation": 0,
+                "top": 140,
+                "width": 380
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "⚙  Hybrid Inverter / Charger",
+                  "fontSize": 15,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb title",
+              "placement": {
+                "height": 24,
+                "left": 440,
+                "rotation": 0,
+                "top": 146,
+                "width": 380
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-blue"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-blue"
+                  },
+                  "fixed": "MPPT · battery charger · DC→AC inverter",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb subtitle",
+              "placement": {
+                "height": 18,
+                "left": 440,
+                "rotation": 0,
+                "top": 170,
+                "width": 380
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-orange"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "orange"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage MPPT box",
+              "placement": {
+                "height": 32,
+                "left": 454,
+                "rotation": 0,
+                "top": 194,
+                "width": 108
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "⚙ MPPT",
+                  "fontSize": 12,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage MPPT txt",
+              "placement": {
+                "height": 24,
+                "left": 454,
+                "rotation": 0,
+                "top": 198,
+                "width": 108
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-yellow"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "yellow"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage Charger box",
+              "placement": {
+                "height": 32,
+                "left": 576,
+                "rotation": 0,
+                "top": 194,
+                "width": 108
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "🔌 Charger",
+                  "fontSize": 12,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage Charger txt",
+              "placement": {
+                "height": 24,
+                "left": 576,
+                "rotation": 0,
+                "top": 198,
+                "width": 108
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-purple"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "purple"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage Inverter box",
+              "placement": {
+                "height": 32,
+                "left": 698,
+                "rotation": 0,
+                "top": 194,
+                "width": 108
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "⚡ Inverter",
+                  "fontSize": 12,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "stage Inverter txt",
+              "placement": {
+                "height": 24,
+                "left": 698,
+                "rotation": 0,
+                "top": 198,
+                "width": 108
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Internal",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Temp label",
+              "placement": {
+                "height": 18,
+                "left": 440,
+                "rotation": 0,
+                "top": 240,
+                "width": 190
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "orange"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "orange"
+                  },
+                  "field": "UPSTemp",
+                  "fontSize": 22,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Temp value",
+              "placement": {
+                "height": 44,
+                "left": 440,
+                "rotation": 0,
+                "top": 258,
+                "width": 190
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-orange"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-orange"
+                  },
+                  "fixed": "°C",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Temp unit",
+              "placement": {
+                "height": 18,
+                "left": 440,
+                "rotation": 0,
+                "top": 302,
+                "width": 190
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "AC Voltage",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Volt label",
+              "placement": {
+                "height": 18,
+                "left": 630,
+                "rotation": 0,
+                "top": 240,
+                "width": 190
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "UPSVolt",
+                  "fontSize": 22,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Volt value",
+              "placement": {
+                "height": 44,
+                "left": 630,
+                "rotation": 0,
+                "top": 258,
+                "width": 190
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-blue"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-blue"
+                  },
+                  "fixed": "V",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Hyb Volt unit",
+              "placement": {
+                "height": 18,
+                "left": 630,
+                "rotation": 0,
+                "top": 302,
+                "width": 190
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "semi-dark-green"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "green"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat terminal",
+              "placement": {
+                "height": 14,
+                "left": 618,
+                "rotation": 0,
+                "top": 368,
+                "width": 44
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "dark-green"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "green"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat body",
+              "placement": {
+                "height": 150,
+                "left": 560,
+                "rotation": 0,
+                "top": 380,
+                "width": 160
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "green"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat fill",
+              "placement": {
+                "height": 24,
+                "left": 570,
+                "rotation": 0,
+                "top": 470,
+                "width": 140
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "🔋 Battery Bank",
+                  "fontSize": 14,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat title",
+              "placement": {
+                "height": 22,
+                "left": 560,
+                "rotation": 0,
+                "top": 386,
+                "width": 160
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "BatteryV",
+                  "fontSize": 22,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat V value",
+              "placement": {
+                "height": 38,
+                "left": 560,
+                "rotation": 0,
+                "top": 410,
+                "width": 160
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-green"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-green"
+                  },
+                  "fixed": "Volts (DC)",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Bat V unit",
+              "placement": {
+                "height": 20,
+                "left": 560,
+                "rotation": 0,
+                "top": 448,
+                "width": 160
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "dark-purple"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "purple"
+                },
+                "radius": 8,
+                "width": 2
+              },
+              "config": {},
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load box",
+              "placement": {
+                "height": 200,
+                "left": 880,
+                "rotation": 0,
+                "top": 140,
+                "width": 200
+              },
+              "type": "rectangle"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "fixed": "🔌  AC Loads",
+                  "fontSize": 14,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load title",
+              "placement": {
+                "height": 24,
+                "left": 880,
+                "rotation": 0,
+                "top": 146,
+                "width": 200
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-purple"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-purple"
+                  },
+                  "fixed": "💻 📡 💡 🖥",
+                  "fontSize": 22,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load icons",
+              "placement": {
+                "height": 36,
+                "left": 880,
+                "rotation": 0,
+                "top": 174,
+                "width": 200
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "text"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "text"
+                  },
+                  "fixed": "Power Drawn",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load VA label",
+              "placement": {
+                "height": 18,
+                "left": 880,
+                "rotation": 0,
+                "top": 220,
+                "width": 200
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "white"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "white"
+                  },
+                  "field": "UPSVA",
+                  "fontSize": 24,
+                  "mode": "field"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load VA value",
+              "placement": {
+                "height": 44,
+                "left": 880,
+                "rotation": 0,
+                "top": 240,
+                "width": 200
+              },
+              "type": "metric-value"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-purple"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-purple"
+                  },
+                  "fixed": "VA (apparent power)",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load VA unit",
+              "placement": {
+                "height": 18,
+                "left": 880,
+                "rotation": 0,
+                "top": 286,
+                "width": 200
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-purple"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-purple"
+                  },
+                  "fixed": "DT compute / sensors",
+                  "fontSize": 11,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "Load caption",
+              "placement": {
+                "height": 22,
+                "left": 880,
+                "rotation": 0,
+                "top": 312,
+                "width": 200
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "yellow"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "yellow"
+                  },
+                  "fixed": "→",
+                  "fontSize": 22,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "arr PV-Hyb",
+              "placement": {
+                "height": 32,
+                "left": 386,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "light-blue"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "light-blue"
+                  },
+                  "fixed": "→",
+                  "fontSize": 22,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "arr Hyb-Load",
+              "placement": {
+                "height": 32,
+                "left": 826,
+                "rotation": 0,
+                "top": 226,
+                "width": 48
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "orange"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "orange"
+                  },
+                  "fixed": "↓",
+                  "fontSize": 22,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "arr Hyb-Bat",
+              "placement": {
+                "height": 32,
+                "left": 600,
+                "rotation": 0,
+                "top": 346,
+                "width": 28
+              },
+              "type": "text"
+            },
+            {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "radius": 0,
+                "width": 0
+              },
+              "config": {
+                "align": "center",
+                "color": {
+                  "fixed": "green"
+                },
+                "text": {
+                  "color": {
+                    "fixed": "green"
+                  },
+                  "fixed": "↑",
+                  "fontSize": 22,
+                  "mode": "fixed"
+                },
+                "valign": "middle"
+              },
+              "connections": [],
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "name": "arr Bat-Hyb",
+              "placement": {
+                "height": 32,
+                "left": 680,
+                "rotation": 0,
+                "top": 346,
+                "width": 28
+              },
+              "type": "text"
+            }
+          ],
+          "name": "Element 1",
+          "placement": {
+            "height": 100,
+            "left": 0,
+            "rotation": 0,
+            "top": 0,
+            "width": 100
+          },
+          "type": "frame"
+        },
+        "showAdvancedTypes": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `SolarRad` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36930' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36930') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `OutTemp` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36557' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36557') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `OutHum` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36556' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36556') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "C",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `WindSpd` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36560' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36560') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "D",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `PVVolt` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '33908' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '33908') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "E",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `BatteryV` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '31316' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '31316') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "F",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `UPSVA` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '33916' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '33916') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "G",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `UPSVolt` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '31318' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '31318') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "H",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT VALUE AS `UPSTemp` FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '31322' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '31322') t ORDER BY CLOCK DESC LIMIT 1",
+          "refId": "I",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Digital Twin — System Schematic (live)",
+      "type": "canvas"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 6,
+      "panels": [],
+      "title": "HISTORY — per-minute live + adaptive forecast",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 23
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '31316' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '31316') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '31316' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Battery Voltage  ·  ups.BatteryVoltage [31316]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 23
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '33908' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '33908') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '33908' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "PV Input Voltage  ·  ups.PvInputVoltage [33908]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 23
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '33916' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '33916') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '33916' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "UPS Output Power VA  ·  ups.OutputPowerVa [33916]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 23
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '31322' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '31322') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '31322' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "UPS Temperature  ·  ups.Temperature [31322]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 31
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36930' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36930') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '36930' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Solar Radiation  ·  sr.SolRad [36930]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 31
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36557' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36557') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '36557' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Outside Temperature  ·  ws.rtOutsideTempC [36557]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 31
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36556' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36556') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '36556' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Outside Humidity  ·  ws.rtOutsideHum [36556]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 31
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE AS \"Live\" FROM ( SELECT CLOCK, VALUE FROM DT.HISTORY      WHERE ITEMID = '36560' UNION ALL SELECT CLOCK, VALUE FROM DT.HISTORY_UINT WHERE ITEMID = '36560') live WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.HISTORY_PRED_SELECTED_${selector_mode} WHERE ITEMID = '36560' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Wind Speed  ·  ws.rtWindAvgSpeedKMH [36560]",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 15,
+      "panels": [],
+      "title": "TRENDS — hourly live + adaptive forecast (last 6d · next 1d)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 40
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '31316' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '31316') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '31316' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "Battery Voltage  ·  ups.BatteryVoltage [31316] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 40
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '33908' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '33908') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '33908' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "PV Input Voltage  ·  ups.PvInputVoltage [33908] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 40
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '33916' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '33916') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '33916' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "UPS Output Power VA  ·  ups.OutputPowerVa [33916] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 40
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '31322' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '31322') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '31322' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "UPS Temperature  ·  ups.Temperature [31322] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 48
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '36930' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '36930') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '36930' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "Solar Radiation  ·  sr.SolRad [36930] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 48
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '36557' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '36557') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '36557' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "Outside Temperature  ·  ws.rtOutsideTempC [36557] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 48
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '36556' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '36556') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '36556' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "Outside Humidity  ·  ws.rtOutsideHum [36556] (trend)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "${DS_MYSQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Live"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Adaptive"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 48
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", VALUE_AVG AS \"Live\" FROM ( SELECT CLOCK, VALUE_AVG                       FROM DT.TRENDS      WHERE ITEMID = '36560' UNION ALL SELECT CLOCK, CAST(VALUE_AVG AS DOUBLE) AS VALUE_AVG FROM DT.TRENDS_UINT WHERE ITEMID = '36560') trend WHERE CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "dataset": "DT",
+          "datasource": {
+            "type": "mysql",
+            "uid": "${DS_MYSQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT CLOCK AS \"time\", ADAPTIVE_VALUE AS \"Adaptive\" FROM DT.TRENDS_PRED_SELECTED_${trend_selector_mode} WHERE ITEMID = '36560' AND CLOCK BETWEEN $__from/1000 AND $__to/1000 ORDER BY CLOCK",
+          "refId": "B",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "timeFrom": "6d",
+      "title": "Wind Speed  ·  ws.rtWindAvgSpeedKMH [36560] (trend)",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "1m",
+  "schemaVersion": 41,
+  "tags": [
+    "DT",
+    "forecast",
+    "overview"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "recursive",
+          "value": "RECURSIVE"
+        },
+        "includeAll": false,
+        "label": "History selector mode",
+        "name": "selector_mode",
+        "options": [
+          {
+            "selected": true,
+            "text": "recursive",
+            "value": "RECURSIVE"
+          },
+          {
+            "selected": false,
+            "text": "direct60",
+            "value": "DIRECT60"
+          }
+        ],
+        "query": "RECURSIVE,DIRECT60",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "recursive",
+          "value": "RECURSIVE"
+        },
+        "includeAll": false,
+        "label": "Trend selector mode",
+        "name": "trend_selector_mode",
+        "options": [
+          {
+            "selected": true,
+            "text": "recursive",
+            "value": "RECURSIVE"
+          },
+          {
+            "selected": false,
+            "text": "direct24",
+            "value": "DIRECT24"
+          }
+        ],
+        "query": "RECURSIVE,DIRECT24",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now+1d"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "DT — Forecast Overview",
+  "uid": "dt-forecast-overview",
+  "version": 16,
+  "__inputs": [
+    {
+      "name": "DS_MYSQL",
+      "label": "Mysql",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "mysql"
+    }
+  ]
+}

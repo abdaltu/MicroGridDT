@@ -1,0 +1,14 @@
+.env
+*.env
+secrets/
+*.pem
+*.key
+*.ovpn
+wg*.conf
+__pycache__/
+*.pyc
+.DS_Store
+logs/
+
+# third-party upstream source archive (not redistributed; see edge/nut-driver/README.md)
+nut-*.zip

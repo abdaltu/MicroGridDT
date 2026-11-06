@@ -1,0 +1,14 @@
+# Python packages imported by the DAGs (pin versions to match your deployment)
+apache-airflow>=3.0
+apache-airflow-providers-apache-kafka
+apache-airflow-providers-mysql
+apache-airflow-providers-standard
+mysql-connector-python
+numpy
+pandas
+pendulum
+scikit-learn
+statsmodels
+lightgbm
+tensorflow
+joblib
